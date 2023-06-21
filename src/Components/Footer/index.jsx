@@ -1,13 +1,13 @@
-import React from "react";
-import { Paper, Text, Grid, Container, Center } from "@mantine/core";
+import React from 'react';
+import { Paper, Text, Grid, Container, Center } from '@mantine/core';
 
 function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <Paper padding="md" style={{ backgroundColor: "blue" }}>
+    <Paper padding="md" style={{ backgroundColor: 'blue' }}>
       <Container>
-        <Center style={{ color: "white" }}>
+        <Center style={{ color: 'white' }}>
           <Grid gutter="xs" justify="center">
             <Text align="center" size="sm">
               © {year} Reed Vogt. All Rights Reserved.
@@ -16,8 +16,8 @@ function Footer() {
               Author of the Site: Reed Vogt
             </Text>
             <Text align="center" size="sm">
-              Email:{" "}
-              <a href="mailto:reed.vogt@example.com" style={{ color: "white" }}>
+              Email:{' '}
+              <a href="mailto:reed.vogt@example.com" style={{ color: 'white' }}>
                 reed.vogt@example.com
               </a>
             </Text>

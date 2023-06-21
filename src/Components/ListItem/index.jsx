@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   Card,
@@ -8,19 +8,20 @@ import {
   Group,
   CardSection,
   Container,
-} from "@mantine/core";
+} from '@mantine/core';
 
 function ListItem(props) {
+  // console.log(props);
   return (
     <Card shadow="sm" radius="md" withBorder>
       <Card.Section withBorder>
         <Group
           className="listItemHeader"
           position="apart"
-          style={{ paddingLeft: "1rem" }}
+          style={{ paddingLeft: '1rem' }}
         >
           <Group spacing="xl">
-            {props.item.complete ? (
+            {props.item.tasks.status === true ? (
               <Badge color="red" variant="filled">
                 Complete
               </Badge>
@@ -29,7 +30,7 @@ function ListItem(props) {
                 Pending
               </Badge>
             )}
-            <Text fw={500}>{props.item.assignee}</Text>
+            <Text fw={500}>{props.item.tasks.name}</Text>
           </Group>
 
           <Button

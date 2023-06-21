@@ -6,3 +6,9 @@
 **/*.json
 **/*.md
 **/*.yml
+**/node_modules/*
+**/*.min.js
+**/vendor/*
+**/coverage/*
+**/build/*
+**/docs/*

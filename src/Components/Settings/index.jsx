@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { Switch, NativeSelect, NumberInput } from "@mantine/core";
-import { SettingsContext } from "../../Context/Settings";
+import { Switch, NativeSelect, NumberInput } from '@mantine/core';
+import { SettingsContext } from '../../Context/Settings';
 
 function SettingsPage() {
   const settings = React.useContext(SettingsContext);
@@ -34,7 +34,7 @@ function SettingsPage() {
       />
 
       <NativeSelect
-        data={["Assignee", "Text", "Difficulty"]}
+        data={['Assignee', 'Text', 'Difficulty']}
         label="Sort Tasks By"
         withAsterisk
         onChange={(event) => {

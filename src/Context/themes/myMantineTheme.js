@@ -1,7 +1,7 @@
-import { MantineThemeOverride, MantineProvider } from "@mantine/core";
+// import { MantineThemeOverride, MantineProvider } from '@mantine/core';
 
-// const myTheme = {
-//   colorScheme: ,
-//   colors:
+// // const myTheme = {
+// //   colorScheme: ,
+// //   colors:
 
-// }
+// // }
