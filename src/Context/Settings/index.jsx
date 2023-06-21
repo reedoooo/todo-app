@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const SettingsContext = React.createContext();
 
@@ -27,6 +26,10 @@ function SettingsProvider(props) {
       setSortBy(savedSettings.sortBy);
     }
   }, []);
+
+  useEffect(() => {
+    saveSettingsToLocalStorage();
+  }, [itemsPerPage, hideCompleted, sortBy]);
 
   return (
     <SettingsContext.Provider

@@ -2,11 +2,9 @@ import React from 'react';
 import { TextInput, Stack, Button, Slider, Title, Card } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
-function ItemForm(props) {
-  const { handleChange, handleSubmit, values } = props;
-
+const ItemForm = ({ onSubmit, handleChange, values }) => {
   return (
-    <form onSubmit={handleSubmit} style={{ width: '10%', height: '400px' }}>
+    <form onSubmit={onSubmit} style={{ width: '10%', height: '400px' }}>
       <Card shadow="sm" radius="md" withBorder>
         <Card.Section style={{ margin: '0' }}>
           <Stack spacing="xl">
@@ -31,9 +29,7 @@ function ItemForm(props) {
             <DatePicker
               name="dueDate"
               label="Due Date *"
-              onChange={(val) =>
-                handleChange({ target: { name: 'dueDate', value: val } })
-              }
+              onChange={(val) => handleChange({ name: 'dueDate', value: val })}
               value={values.dueDate}
             />
 
@@ -51,7 +47,7 @@ function ItemForm(props) {
                 { value: 5 },
               ]}
               onChange={(val) =>
-                handleChange({ target: { name: 'difficulty', value: val } })
+                handleChange({ name: 'difficulty', value: val })
               }
               value={values.difficulty}
             />
@@ -62,6 +58,6 @@ function ItemForm(props) {
       </Card>
     </form>
   );
-}
+};
 
 export default ItemForm;

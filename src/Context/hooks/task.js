@@ -1,4 +1,3 @@
-// Custom Hooks (useTasks.js)
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -12,7 +11,7 @@ export const useTasks = (initialTasks = []) => {
         const response = await axios.get(
           `${process.env.REACT_APP_SERVER}/api/myTodoRoutes`,
         );
-
+        // console.log('Fetch tasks response:', response.data);
         setTasks(response.data);
       } catch (error) {
         console.error('Fetch tasks error:', error.message);
@@ -20,43 +19,24 @@ export const useTasks = (initialTasks = []) => {
     };
     fetchTasks();
   }, []);
-  console.log('tasks', tasks);
-  // Add a task
+
   // Add a task
   const addTask = async (newTask) => {
-    console.log('addTask', newTask);
+    console.log('Add task values:', newTask);
+    // ...
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_SERVER}/api/myTodoRoutes`,
-        JSON.stringify(newTask),
+        { task: newTask }, // Wrap newTask into a 'task' object
         {
           headers: { 'Content-Type': 'application/json' },
         },
       );
-      console.log('Add task response:', response.data);
       setTasks((prevTasks) => [...prevTasks, response.data]);
     } catch (error) {
       console.error('Add task error:', error.message);
     }
   };
-
-  // const addTask = async (task) => {
-  //   console.log('addTask', task);
-  //   try {
-  //     const response = await axios.post(
-  //       `${process.env.REACT_APP_SERVER}/api/myTodoRoutes`,
-  //       JSON.stringify(task),
-  //       {
-  //         headers: { 'Content-Type': 'application/json' },
-  //       },
-  //     );
-
-  //     console.log('Add task response:', response.data);
-  //     setTasks((prevTasks) => [...prevTasks, response.data]);
-  //   } catch (error) {
-  //     console.error('Add task error:', error.message);
-  //   }
-  // };
 
   // Delete a task
   const deleteTask = async (id) => {
@@ -74,11 +54,11 @@ export const useTasks = (initialTasks = []) => {
   const toggleTaskCompletion = async (id) => {
     const taskToToggle = tasks.find((task) => task._id === id);
     if (taskToToggle) {
-      taskToToggle.complete = !taskToToggle.complete;
+      taskToToggle.status = !taskToToggle.status;
       try {
         await axios.put(
           `${process.env.REACT_APP_SERVER}/api/myTodoRoutes/${id}`,
-          taskToToggle,
+          { task: taskToToggle }, // Wrap taskToToggle into a 'task' object
         );
         setTasks((prevTasks) =>
           prevTasks.map((task) => (task._id === id ? taskToToggle : task)),

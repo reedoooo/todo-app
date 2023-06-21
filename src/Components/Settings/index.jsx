@@ -1,6 +1,12 @@
 import React from 'react';
-
-import { Switch, NativeSelect, NumberInput } from '@mantine/core';
+import {
+  Switch,
+  NativeSelect,
+  NumberInput,
+  Button,
+  Paper,
+} from '@mantine/core';
+import { FaSave } from 'react-icons/fa';
 import { SettingsContext } from '../../Context/Settings';
 
 function SettingsPage() {
@@ -8,41 +14,49 @@ function SettingsPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     settings.saveSettingsToLocalStorage();
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <Switch
-        label="Hide Completed Tasks"
-        id="hideCompleted"
-        checked={settings.hideCompleted}
-        onChange={() => settings.setHideCompleted(!settings.hideCompleted)}
-      />
+      <Paper padding="md" shadow="xs">
+        <Switch
+          label="Hide Completed Tasks"
+          id="hideCompleted"
+          checked={settings.hideCompleted}
+          onChange={() => settings.setHideCompleted(!settings.hideCompleted)}
+        />
 
-      <NumberInput
-        defaultValue={settings.itemsPerPage}
-        label="Tasks per Page"
-        min={1}
-        max={10}
-        withAsterisk
-        id="itemsPerPage"
-        onChange={(event) => {
-          settings.setItemsPerPage(event);
-        }}
-      />
+        <NumberInput
+          defaultValue={settings.itemsPerPage}
+          label="Tasks per Page"
+          min={1}
+          max={10}
+          required
+          id="itemsPerPage"
+          onChange={(event) => {
+            settings.setItemsPerPage(event);
+          }}
+        />
 
-      <NativeSelect
-        data={['Assignee', 'Text', 'Difficulty']}
-        label="Sort Tasks By"
-        withAsterisk
-        onChange={(event) => {
-          settings.setSortBy(event.target.value);
-        }}
-      />
+        <NativeSelect
+          data={['Name', 'DueDate', 'Difficulty']}
+          label="Sort Tasks By"
+          required
+          onChange={(event) => {
+            settings.setSortBy(event.target.value);
+          }}
+        />
 
-      <button type="submit">Save</button>
+        <Button
+          type="submit"
+          color="blue"
+          leftIcon={<FaSave />}
+          style={{ marginTop: '15px' }}
+        >
+          Save
+        </Button>
+      </Paper>
     </form>
   );
 }
