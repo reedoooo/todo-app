@@ -2,28 +2,27 @@ import React, { useEffect, useState } from 'react';
 
 export const SettingsContext = React.createContext();
 
-function SettingsProvider(props) {
-  const [itemsPerPage, setItemsPerPage] = useState(3);
+const SettingsProvider = ({ children }) => {
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [hideCompleted, setHideCompleted] = useState(true);
   const [sortBy, setSortBy] = useState('difficulty');
 
   const saveSettingsToLocalStorage = () => {
-    localStorage.setItem(
-      'toDoSettings',
-      JSON.stringify({
-        itemsPerPage: itemsPerPage,
-        hideCompleted: hideCompleted,
-        sortBy: sortBy.toLowerCase(),
-      }),
-    );
+    const settings = {
+      itemsPerPage,
+      hideCompleted,
+      sortBy: sortBy.toLowerCase(),
+    };
+    localStorage.setItem('toDoSettings', JSON.stringify(settings));
   };
 
   useEffect(() => {
-    if (localStorage.getItem('toDoSettings')) {
-      let savedSettings = JSON.parse(localStorage.getItem('toDoSettings'));
-      setItemsPerPage(savedSettings.itemsPerPage);
-      setHideCompleted(savedSettings.hideCompleted);
-      setSortBy(savedSettings.sortBy);
+    const savedSettings = localStorage.getItem('toDoSettings');
+    if (savedSettings) {
+      const { itemsPerPage, hideCompleted, sortBy } = JSON.parse(savedSettings);
+      setItemsPerPage(itemsPerPage);
+      setHideCompleted(hideCompleted);
+      setSortBy(sortBy);
     }
   }, []);
 
@@ -31,21 +30,21 @@ function SettingsProvider(props) {
     saveSettingsToLocalStorage();
   }, [itemsPerPage, hideCompleted, sortBy]);
 
+  const contextValue = {
+    itemsPerPage,
+    setItemsPerPage,
+    hideCompleted,
+    setHideCompleted,
+    sortBy,
+    setSortBy,
+    saveSettingsToLocalStorage,
+  };
+
   return (
-    <SettingsContext.Provider
-      value={{
-        itemsPerPage,
-        setItemsPerPage,
-        hideCompleted,
-        setHideCompleted,
-        sortBy,
-        setSortBy,
-        saveSettingsToLocalStorage,
-      }}
-    >
-      {props.children}
+    <SettingsContext.Provider value={contextValue}>
+      {children}
     </SettingsContext.Provider>
   );
-}
+};
 
 export default SettingsProvider;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Switch,
   NativeSelect,
@@ -9,13 +9,21 @@ import {
 import { FaSave } from 'react-icons/fa';
 import { SettingsContext } from '../../Context/Settings';
 
-function SettingsPage() {
-  const settings = React.useContext(SettingsContext);
+const SettingsPage = () => {
+  const settings = useContext(SettingsContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     settings.saveSettingsToLocalStorage();
   };
+
+  const {
+    hideCompleted,
+    setHideCompleted,
+    itemsPerPage,
+    setItemsPerPage,
+    setSortBy,
+  } = settings;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -23,29 +31,25 @@ function SettingsPage() {
         <Switch
           label="Hide Completed Tasks"
           id="hideCompleted"
-          checked={settings.hideCompleted}
-          onChange={() => settings.setHideCompleted(!settings.hideCompleted)}
+          checked={hideCompleted}
+          onChange={() => setHideCompleted(!hideCompleted)}
         />
 
         <NumberInput
-          defaultValue={settings.itemsPerPage}
+          defaultValue={itemsPerPage}
           label="Tasks per Page"
           min={1}
           max={10}
           required
           id="itemsPerPage"
-          onChange={(event) => {
-            settings.setItemsPerPage(event);
-          }}
+          onChange={(value) => setItemsPerPage(value)}
         />
 
         <NativeSelect
           data={['Name', 'DueDate', 'Difficulty']}
           label="Sort Tasks By"
           required
-          onChange={(event) => {
-            settings.setSortBy(event.target.value);
-          }}
+          onChange={(event) => setSortBy(event.target.value)}
         />
 
         <Button
@@ -59,6 +63,6 @@ function SettingsPage() {
       </Paper>
     </form>
   );
-}
+};
 
 export default SettingsPage;

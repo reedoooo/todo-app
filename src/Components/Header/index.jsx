@@ -2,14 +2,10 @@ import React, { useState } from 'react';
 import { Paper, Text, Group, Switch } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
 import { FaHome, FaCog, FaSun, FaMoon } from 'react-icons/fa';
+import Login from '../Auth/login';
 
 function Header() {
   const [isDark, setIsDark] = useState(false);
-
-  const activeStyle = {
-    fontWeight: 'bold',
-    color: '#00acc1',
-  };
 
   const handleThemeChange = () => {
     setIsDark(!isDark);
@@ -41,8 +37,6 @@ function Header() {
                   alignItems: 'center',
                   transition: 'all .3s ease',
                 }}
-                activeStyle={activeStyle}
-                exact
                 to="/"
               >
                 <FaHome style={{ marginRight: 5 }} />
@@ -58,7 +52,6 @@ function Header() {
                   alignItems: 'center',
                   transition: 'all .3s ease',
                 }}
-                activeStyle={activeStyle}
                 to="/settings"
               >
                 <FaCog style={{ marginRight: 5 }} />
@@ -81,6 +74,7 @@ function Header() {
               )}
             </div>
           </div>
+          <Login />
         </Group>
       </Paper>
     </header>

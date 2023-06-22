@@ -3,6 +3,7 @@ import { MantineProvider } from '@mantine/core';
 
 import SettingsProvider from './Context/Settings';
 import Todo from './Components/Todo';
+import AuthProvider from './Context/Auth/authContext';
 
 function App() {
   return (
@@ -53,7 +54,9 @@ function App() {
       }}
     >
       <SettingsProvider>
-        <Todo />
+        <AuthProvider>
+          <Todo />
+        </AuthProvider>
       </SettingsProvider>
     </MantineProvider>
   );

@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Todo from './Todo';
 import { SettingsContext } from '../../Context/Settings';
 import { BrowserRouter as Router } from 'react-router-dom';
