@@ -10,7 +10,8 @@ import ItemForm from '../Form';
 
 import useForm from '../../Context/hooks/form.js';
 import useTasks from '../../Context/hooks/task.js';
-import Auth from '../Auth';
+// import Auth from '../Auth/index.jsx';
+import Auth from '../Auth/auth';
 
 const Todo = () => {
   const { tasks, addTask, deleteTask, toggleTaskCompletion } = useTasks();
@@ -31,9 +32,9 @@ const Todo = () => {
 
   return (
     <>
-      <BrowserRouter>
-        <Header data-testid="todo-header" />
-        <Auth>
+      <Header data-testid="todo-header" />
+      <Auth>
+        <BrowserRouter>
           <Routes>
             <Route path="/settings" element={<SettingsPage />} />
             <Route
@@ -75,10 +76,9 @@ const Todo = () => {
               }
             />
           </Routes>
-
-          <Footer />
-        </Auth>
-      </BrowserRouter>
+        </BrowserRouter>
+      </Auth>
+      <Footer />
     </>
   );
 };

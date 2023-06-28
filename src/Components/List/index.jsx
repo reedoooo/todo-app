@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { SettingsContext } from '../../Context/Settings';
 import { Pagination, Container } from '@mantine/core';
 import ListItem from '../ListItem';
-import Auth from '../Auth/index.jsx';
+import Auth from '../Auth/auth';
 
 const List = ({ data, toggleComplete, deleteItem }) => {
   const settings = useContext(SettingsContext);
   const [activePage, setActivePage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [taskList, setTaskList] = useState([]);
 
   useEffect(() => {
@@ -23,22 +24,31 @@ const List = ({ data, toggleComplete, deleteItem }) => {
       }
     });
 
-    const filteredData = settings.hideCompleted
-      ? sortedData.filter((item) => !item.complete)
-      : sortedData;
+    let filteredData;
+    if (settings.hideCompleted) {
+      filteredData = sortedData.filter((item) => !item.complete);
+    } else {
+      filteredData = sortedData;
+    }
 
     setTaskList(filteredData.slice(start, end));
   }, [data, settings, activePage]);
 
-  const totalPages = Math.ceil(
-    settings.hideCompleted
-      ? data.filter((item) => !item.complete).length / settings.itemsPerPage
-      : data.length / settings.itemsPerPage,
-  );
+  useEffect(() => {
+    let totalPages;
+    if (settings.hideCompleted) {
+      totalPages = Math.ceil(
+        data?.filter((item) => !item.complete).length / settings.itemsPerPage,
+      );
+    } else {
+      totalPages = Math.ceil(data?.length / settings.itemsPerPage);
+    }
+    setTotalPages(totalPages);
+  }, [data, settings.hideCompleted, settings.itemsPerPage]);
 
   return (
     <Auth capability="read">
-      <Container style={{ minWidth: '65%' }}>
+      <Container style={{ minWidth: '65%' }} key="listOfItems">
         {taskList.map((item, index) => (
           <ListItem
             key={`${item._id}_${index}`}
@@ -49,8 +59,10 @@ const List = ({ data, toggleComplete, deleteItem }) => {
         ))}
         <Pagination
           value={activePage}
+          key="itemsPagination"
           onChange={setActivePage}
           total={totalPages}
+          style={{ marginTop: '1rem' }}
         />
       </Container>
     </Auth>

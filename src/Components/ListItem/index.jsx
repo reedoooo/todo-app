@@ -8,20 +8,20 @@ import {
   CardSection,
   Container,
 } from '@mantine/core';
-import Auth from '../Auth';
+import Auth from '../Auth/auth';
 
 const ListItem = ({ item, deleteItem, toggleComplete }) => {
-  const task = item.task[0]; // simplifying access to the task data
+  const task = item.task[0];
 
   if (!task) {
-    return null; // or you can return a placeholder or a loading spinner
+    return null;
   }
 
   const { status, name, description, difficulty, _id } = task;
-
+  console.log('_id', _id);
   return (
-    <Card shadow="sm" radius="md" withBorder>
-      <Card.Section withBorder>
+    <Card shadow="sm" radius="md">
+      <CardSection withBorder>
         <Group
           className="listItemHeader"
           position="apart"
@@ -41,18 +41,24 @@ const ListItem = ({ item, deleteItem, toggleComplete }) => {
             </Button>
           </Auth>
         </Group>
-      </Card.Section>
+      </CardSection>
 
-      <Card.Section withBorder>
+      <CardSection withBorder>
         <Container size="97.5%" px={0}>
           <Text>{description}</Text>
           <Text align="right">Difficulty: {difficulty}</Text>
         </Container>
-      </Card.Section>
+      </CardSection>
       <CardSection>
         <Group position="right">
           <Auth capability="update">
-            <Button onClick={() => toggleComplete(_id)}>Complete</Button>
+            <Button
+              onClick={() => {
+                toggleComplete(_id);
+              }}
+            >
+              Complete
+            </Button>
           </Auth>
         </Group>
       </CardSection>

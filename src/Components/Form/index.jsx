@@ -1,7 +1,8 @@
 import React from 'react';
 import { TextInput, Stack, Button, Slider, Title, Card } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
-import Auth from '../Auth/index';
+// import Auth from '../Auth/index.jsx';
+import Auth from '../Auth/auth';
 
 const ItemForm = ({ onSubmit, handleChange, values }) => {
   return (
